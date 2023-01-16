@@ -1,0 +1,53 @@
+Packages are go's way of organising code
+programs are written as one or more Packages
+Packages can be imported from the GO package repository
+packages should be focused and perform a single thing 
+ argument parsing 
+ drawing graphics 
+ handling HTTP requests
+
+
+* using packages
+import "name"
+for mulitple import
+    import (
+        "name"
+        "namespace/packagename"
+    )
+
+can import everything using a dot.
+ No need to reference package name in code 
+
+import (
+    . "name"
+)
+using dot will import everything
+
+imports can be renamed 
+import (
+    pk "namespace/packageName"
+)
+
+
+Modules
+Modules are a collection of packages 
+created by having a go.mod file in the root directory of your project
+ can be managed by to go CLI 
+contains information about your project
+ Dependencies . GO version , package info
+All Go projects have a go.mod file
+
+
+example Module
+----
+module example.com/practice  
+go 1.17
+require (
+    github.com/abhishek/go-arg v1.4.2
+    github.com/fatih/color v1.13.0
+)
+----
+github.com/fatih/ this is namespace
+example.com is namespace
+color will be the package
+everything in the require block will be the package along with version that we are using in our code 

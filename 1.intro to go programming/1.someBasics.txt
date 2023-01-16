@@ -1,0 +1,11 @@
+why go?
+* In-demand ,used by high profile company
+* Simplistic and easy to understand by design
+* Built-in dependency management (package registry)
+* familiar C-style syntax
+
+Technical features:
+* First class concurrency primitives (perfect for backend programming)
+* Type safety enforced by compiler
+* Memory safe ; no use-after-free bugs (garbage collected , no need to manage memory)
+* Compiles to machine code for very fast speeds
