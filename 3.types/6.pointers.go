@@ -55,6 +55,42 @@ func replace(old *string, new string, counter *Counter) {
 	increment(counter)
 }
 
+const (
+	Active   = true
+	Inactive = false
+)
+
+type SecurityTag bool
+
+type Item struct {
+	name string
+	tag  SecurityTag
+}
+
+func activate(tag *SecurityTag) {
+	fmt.Println("activating...")
+	*tag = Active
+}
+
+func deActivate(tag *SecurityTag) {
+	fmt.Println("deactivating...")
+	*tag = Inactive
+}
+
+func checkout(items []Item) {
+	fmt.Println("checking out...")
+	for i := 0; i < len(items); i++ {
+		deActivate(&items[i].tag)
+	}
+}
+
+func printItems(items []Item) {
+	fmt.Println("printing items")
+	for i := 0; i < len(items); i++ {
+		fmt.Println(i, items[i].name, items[i].tag)
+	}
+}
+
 func main() {
 	counter := Counter{}
 	hello := "hello"
@@ -67,4 +103,23 @@ func main() {
 
 	replace(&phrase[0], "go", &counter)
 	fmt.Println(phrase)
+	
+	//excercises
+	
+	fmt.Println("println")
+	items := []Item{
+		{name: "kLaptop", tag: Active},
+		{name: "kMobile", tag: Active},
+		{name: "PersonalLaptop", tag: Active},
+		{name: "PersonalMobile", tag: Active},
+	}
+
+	deActivate(&items[0].tag)
+	deActivate(&items[2].tag)
+
+	printItems(items)
+
+	checkout(items)
+
+	printItems(items)
 }
