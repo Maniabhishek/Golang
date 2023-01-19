@@ -1,0 +1,70 @@
+/*
+function calls in go are pass by value
+a copy of each function argument is made , regardless of size
+potentially slow for large data structures
+more difficult to manage program state
+this can be changes by using pointers
+*/
+
+/*
+the value of the variable itself is memory address
+accessing the data requires dereferencing the pointer
+this allows changing values that exist elsewhere in the program
+*/
+
+/*
+creating pointers
+value := 10
+var valuePtr *int
+valuePtr = &value  (&value means we created pointer from variable )
+
+shorter way
+value := 10
+valuePtr := &value
+
+*/
+
+/*
+asterisk (*) when use with the pointer will dereference the pointer
+this provides access to the actual data it points to
+func increment(x *int){
+	*x += 1
+}
+
+value := 1
+increment(&value)
+
+*/
+
+package main
+
+import "fmt"
+
+type Counter struct {
+	count int
+	num   int
+}
+
+func increment(counter *Counter) {
+	counter.count += 1
+	fmt.Println("counter is ", *counter)
+}
+
+func replace(old *string, new string, counter *Counter) {
+	*old = new
+	increment(counter)
+}
+
+func main() {
+	counter := Counter{}
+	hello := "hello"
+	world := "world"
+	replace(&hello, "hi", &counter)
+	fmt.Println(hello, world)
+
+	phrase := []string{hello, world}
+	fmt.Println(phrase)
+
+	replace(&phrase[0], "go", &counter)
+	fmt.Println(phrase)
+}
