@@ -1,0 +1,67 @@
+refer link https://www.digitalocean.com/community/tutorials/how-to-use-go-modules 
+ 
+ Go module looks similar to a Go package. A module has a number of Go code files implementing the functionality of a package, but it also has two additional and important files in the root: the go.mod file and the go.sum file. 
+
+In Go, each directory is considered its own package, and each file has its own package declaration line. In the main.go file you just created, the package is named main. Typically, you can name the package any way you’d like, but the main package is special in Go. When Go sees that a package is named main it knows the package should be considered a binary, and should be compiled into an executable file, instead of a library designed to be used in another program.
+
+Since Go modules are distributed from a version control repository, they can use version control features such as tags, branches, and even commits. You can reference these in your dependencies using the @ symbol at the end of the module path along with the version you’d like to use. Earlier, when you installed the latest version of Cobra, you were taking advantage of this capability, but you didn’t need to add it explicitly to your command. The go tool knows that if a specific version isn’t provided using @, it should use the special version latest. The latest version isn’t actually in the repository, like my-tag or my-branch may be. It’s built into the go tool as a helper so you don’t need to search for the latest version yourself.
+
+For example, when you added your dependency initially, you could have also used the following command for the same result:
+
+go get github.com/spf13/cobra@latest
+Now, imagine there’s a module you use that’s currently in development. For this example, call it your_domain/sammy/awesome. There’s a new feature being added to this awesome module and work is being done in a branch called new-feature. To add this branch as a dependency of your own module you would provide go get with the module path, followed by the @ symbol, followed by the name of the branch:
+
+go get your_domain/sammy/awesome@new-feature
+Running this command would cause go to connect to the your_domain/sammy/awesome repository, download the new-feature branch at the current latest commit for the branch, and add that information to the go.mod file.
+
+Branches aren’t the only way you can use the @ option, though. This syntax can be used for tags and even specific commits to the repository. For example, sometimes the latest version of the library you’re using may have a broken commit. In these cases, it can be useful to reference the commit just before the broken commit.
+
+Using your module’s Cobra dependency as an example, suppose you need to reference commit 07445ea of github.com/spf13/cobra because it has some changes you need and you can’t use another version for some reason. In this case, you can provide the commit hash after the @ symbol the same as you would for a branch or a tag. Run the go get command in your mymodule directory with the module and version to download the new version:
+
+go get github.com/spf13/cobra@07445ea
+If you open your module’s go.mod file again you’ll see that go get has updated the require line for github.com/spf13/cobra to reference the commit you specified:
+
+projects/mymodule/go.mod
+module mymodule
+
+go 1.16
+
+require (
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/spf13/cobra v1.1.2-0.20210209210842-07445ea179fc // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+)
+Since a commit is a particular point in time, unlike a tag or a branch, Go includes additional information in the require directive to ensure it’s using the correct version in the future. If you look closely at the version, you’ll see it does include the commit hash you provided: v1.1.2-0.20210209210842-07445ea179fc.
+
+Go modules also use this functionality to support releasing different versions of the module. When a Go module releases a new version, a new tag is added to the repository with the version number as the tag. If you want to use a specific version, you can look at a list of tags in the repository to find the version you’re looking for. If you already know the version, you may not need to search through the tags because version tags are named consistently.
+
+Returning to Cobra as an example, suppose you want to use Cobra version 1.1.1. You could look at the Cobra repository and see it has a tag named v1.1.1, among others. To use this tagged version, you would use the @ symbol in a go get command, just as you would use a non-version tag or branch. Now, update your module to use Cobra 1.1.1 by running the go get command with v1.1.1 as the version:
+
+go get github.com/spf13/cobra@v1.1.1
+Now if you open your module’s go.mod file, you’ll see go get has updated the require line for github.com/spf13/cobra to reference the version you provided:
+
+projects/mymodule/go.mod
+module mymodule
+
+go 1.16
+
+require (
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/spf13/cobra v1.1.1 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+)
+Finally, if you’re using a specific version of a library, such as the 07445ea commit or v1.1.1 from earlier, but you determine you’d rather start using the latest version, it’s possible to do this by using the special latest version. To update your module to the latest version of Cobra, run go get again with the module path and the latest version:
+
+go get github.com/spf13/cobra@latest
+Once this command finishes, the go.mod file will update to look like it did before you referenced a specific version of Cobra. Depending on your version of Go and the current latest version of Cobra your output may look slightly different, but you should still see that the github.com/spf13/cobra line in the require section is updated to the latest version again:
+
+module mymodule
+
+go 1.16
+
+require (
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/spf13/cobra v1.2.1 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+)
+The go get command is a powerful tool you can use to manage dependencies in your go.mod file without needing to edit it manually. As you saw in this section, using the @ character with a module name allows you to use particular versions for a module, from release versions to specific repository commits. It can even be used to go back to the latest version of your dependencies. Using a combination of these options will allow you to ensure the stability of your programs in the future.
