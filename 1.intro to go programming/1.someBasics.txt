@@ -1,3 +1,7 @@
+Go is a compiled language, which means that Go source code is translated into machine language for the specific processor you want to run it on: an ARM chip, an X86_64, or whatever.
+
+This makes Go programs in general much faster than the equivalent programs in Python, which is an interpreted language, meaning that it's not executed directly on the CPU. Instead, another program, called the interpreter, reads Python source code and translates it on-the-fly into machine instructions.
+
 why go?
 * In-demand ,used by high profile company
 * Simplistic and easy to understand by design
