@@ -100,3 +100,20 @@ func printServer() {
 	}
 	printServerStatus(serverStatus)
 }
+
+// There's one little gotcha to look out for here: we can't assign to a struct field within a map. For example, suppose we had a type menuItem like this:
+type menuItem struct{
+    price float64
+}
+func structWithinMap(){
+	var menu = map[string]menuItem{
+   	 "beans": menuItem{
+        	price: 0.49,
+   	 	}
+	}
+	
+	// menu["beans"].price = 0.25 // not allowed
+	beans := menu["beans"]
+	beans.price = 0.25
+	menu["beans"] = beans
+}
