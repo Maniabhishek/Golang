@@ -42,7 +42,10 @@ myMap := map[string]int{
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 const (
 	online      = 0
@@ -66,6 +69,10 @@ func main() {
 		fmt.Println(item1, "not found", found)
 	}
 	printServer()
+	structWithinMap()
+	fmt.Println(checkMapIfKeyExistInMap())
+	fmt.Println(checkIfStockExists())
+	fmt.Println(checkIfStockExists2())
 }
 
 func printServerStatus(server map[string]int) {
@@ -102,18 +109,74 @@ func printServer() {
 }
 
 // There's one little gotcha to look out for here: we can't assign to a struct field within a map. For example, suppose we had a type menuItem like this:
-type menuItem struct{
-    price float64
+type menuItem struct {
+	price float64
 }
-func structWithinMap(){
+
+func structWithinMap() {
 	var menu = map[string]menuItem{
-   	 "beans": menuItem{
-        	price: 0.49,
-   	 	}
+		"beans": menuItem{
+			price: 0.49,
+		},
 	}
-	
+
 	// menu["beans"].price = 0.25 // not allowed
 	beans := menu["beans"]
 	beans.price = 0.25
 	menu["beans"] = beans
+	fmt.Println(menu["beans"])
+}
+
+// Checking whether a key exists in the map
+// Sometimes it's useful to be able to tell whether or not a Go map key exists, and there's a special syntax for that:
+func checkMapIfKeyExistInMap() string {
+
+	menu := map[string]menuItem{
+		"mobile": menuItem{
+			price: 1234,
+		},
+	}
+
+	fmt.Println(menu)
+
+	// syntax for checking if exists
+	res, ok := menu["beans"]
+
+	if ok {
+		fmt.Println("beans exists ")
+		return strconv.Itoa(int(res.price))
+	}
+	return "key does not exist"
+}
+
+// Boolean maps
+// Suppose we have a map called inStock which represents our current stock:
+
+func checkIfStockExists() string {
+	var stock = map[string]bool{
+		"pizza":   true,
+		"burger":  true,
+		"biryani": false,
+	}
+
+	if _, ok := stock["chicken"]; ok {
+		return fmt.Sprintf("Yes, %s is in stock", "chicken")
+	}
+	return "chicken not available"
+}
+
+//	This is a little lame, though. Since we know that maps return the zero value for mising keys,
+// 	and we also happen to know that the zero value of bool is false, we can write simply:
+
+func checkIfStockExists2() string {
+	var stock = map[string]bool{
+		"pizza":   true,
+		"burger":  true,
+		"biryani": false,
+	}
+
+	if stock["pizza"] {
+		return fmt.Sprintf("Yes, %s is in stock", "pizza")
+	}
+	return "pizza not available"
 }
