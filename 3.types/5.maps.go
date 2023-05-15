@@ -180,3 +180,25 @@ func checkIfStockExists2() string {
 	}
 	return "pizza not available"
 }
+
+// Ordering map keys
+// So how do you iterate over map keys in a certain order? The only way is to store the keys yourself, as a slice, and then order them the way you want:
+
+func iteratingMapInSomeOrder() {
+	var dishes []string
+	var menu = map[string]menuItem{
+		"beans": menuItem{
+			price: 123,
+		},
+	}
+
+	for dish := range menu {
+		dishes = append(dishes, dish)
+	}
+	sort.Strings(dishes)
+	fmt.Println("In alphabetical order:")
+	for _, dish := range dishes {
+		fmt.Println(dish, menu[dish])
+	}
+}
+
