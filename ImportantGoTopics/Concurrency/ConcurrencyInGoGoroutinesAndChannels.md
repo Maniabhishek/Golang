@@ -25,7 +25,7 @@
 > TO avoid this , go uses locks so that only one goroutine can modify a certain piece of data at a time 
 
 ## Let's see how can we create a go routine
-```
+```go
 package main
 import "fmt"
 
