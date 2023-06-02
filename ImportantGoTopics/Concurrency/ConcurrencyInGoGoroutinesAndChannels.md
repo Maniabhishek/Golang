@@ -26,19 +26,19 @@
 
 ## Let's see how can we create a go routine
 
-package main
-import "fmt"
+> package main
+> import "fmt"
+>
+> func main(){
+>   fmt.Println("start")
+>   go printNum(10)
+>   fmt.Println("end")
+>}
 
-func main(){
-    fmt.Println("start")
-    go printNum(10)
-    fmt.Println("end")
-}
-
-func printNum(num int){
-    num2 := 5
-    for(i:= 1; i< num ; i++){
-        num2 = num2 * i
-    }
-    fmt.Printf(num2)
-}
+>func printNum(num int){
+>   num2 := 5
+>   for(i:= 1; i< num ; i++){
+>       num2 = num2 * i
+>   }
+>   fmt.Printf(num2)
+>}
