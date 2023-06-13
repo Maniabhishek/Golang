@@ -108,8 +108,8 @@ func sender2(c chan string) {
 func main() {
     var c chan string = make(chan string)
 
-    go pinger(c)
-    go ponger(c)
+    go sender(c)
+    go sender2(c)
     go printer(c)
 
     var input string
