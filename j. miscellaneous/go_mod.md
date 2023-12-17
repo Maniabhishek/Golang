@@ -1,0 +1,1 @@
+- The go.mod file is the root of dependency management in GoLang. All the modules which are needed or to be used in the project are maintained in go.mod file.
