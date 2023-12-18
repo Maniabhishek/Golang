@@ -1,1 +1,2 @@
 - The go.mod file is the root of dependency management in GoLang. All the modules which are needed or to be used in the project are maintained in go.mod file.
+- For all the packages we are going to import/use in our project, it will create an entry of those modules in go.mod. Having a go mod file saves the efforts of running the go get command for each dependent module to run the project successfully.
