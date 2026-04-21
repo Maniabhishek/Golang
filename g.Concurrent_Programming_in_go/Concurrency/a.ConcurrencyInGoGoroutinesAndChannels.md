@@ -52,7 +52,7 @@ func printNum(num int){
 > - this solution is not ideal in any concurrent program, later we will see how we can solve using channels 
 
 ## What is a channel 
-> - A channel is a way to cimmunicate between different goroutines. 
+> - A channel is a way to communicate between different goroutines. 
 > - It is a safe way of sending value of one data type to another goroutine
 > - A channel is passed by reference meaning that when creating a channel and then passing it to other functions, these functions will have the same reference pointing to the same channel. 
 >> We can compare channels only if they have the same type and as I previously mentioned since they are passed by reference, a comparison between two channels will evaluate true if both are pointing to the same reference in memory. We can also compare a channel with nil.
