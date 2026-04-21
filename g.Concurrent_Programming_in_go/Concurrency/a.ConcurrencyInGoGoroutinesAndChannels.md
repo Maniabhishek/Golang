@@ -1,7 +1,7 @@
 # Concurrency in Go, Goroutines, and channels 
 
 > Go is a powerful language 
->> Because it can handle several things effectively and efficiently, and something which is more facinating and powerful is how it handles concurrency
+>> Because it can handle several things effectively and efficiently, and something which is more fascinating and powerful is how it handles concurrency
 
 ## What is concurrency 
 > - A program is called as concurrent if it can handle multiple tasks at the same time. 
